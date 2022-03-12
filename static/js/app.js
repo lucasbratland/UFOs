@@ -16,10 +16,27 @@ function buildtable() {
             let cell = row.append("td");
             cell.text(val);
         });
-    });
-
-
-
-
-    
+    });  
 }
+
+function handleClick(){
+    // grab the datetime value from the filter
+    let date = d3.select("#datetime").property("value");
+    let filteredData = tableData;
+
+    // Adding if statement to check for a filtered date
+    // filter the rows to match the entered datetime value
+    if (date) {
+        filteredData = filteredData.filter(row => row.datetime === date);
+    };
+
+    // Rebuild the table with the filtered data
+    buildtable(filteredData);
+
+};
+
+// Attach an event to listen for the fiorm button click
+d3.selectAll("filter-btn").on("click", handleClick);
+
+// Build table when page loads
+buildtable(tableData);
